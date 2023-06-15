@@ -37,7 +37,7 @@ commands:
     steps:
       - run: 
           name: run go generate
-          command: go generate codegen.go
+          command: go generate ./codegen/codegen.go
   build-code:
     steps: 
       - run: 
