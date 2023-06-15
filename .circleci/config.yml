@@ -33,6 +33,16 @@ commands:
       - run:
           name: Run test
           command: go test ./...
+  codegen: 
+    steps:
+      - run:
+        name: switch to codegen
+        command: cd ./codegen
+      - run: run go generate
+        command: go generate codegen.go
+      - run:
+        name: switch to repo root dir
+        command: cd ..
   build-code:
     steps: 
       - run: 
@@ -44,6 +54,7 @@ jobs:
     executor: docker-go
     steps:
       - lint-test 
+      - codegen
       - build-code
   release:
     executor: docker-go
@@ -64,4 +75,4 @@ workflows:
          filters: 
            branches:
              ignore:
-               - master
+               - master #need to be flipped to ONLY run for `master` later
