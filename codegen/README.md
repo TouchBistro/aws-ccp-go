@@ -1,7 +1,7 @@
 ## codegen
 
 `codegen.go` is a code generation utilty to create the `client.go` files for all service packages, i.e 
-`github.com/aws-creds/provier/clients/_<service_name>`. These files contain the `NewClient()` builder functions that
+`github.com/aws-creds/provier/clients/_<service_name>`. These files contain the `Client()` builder functions which
 construct, cache & return  the respective AWS SDK clients. The `<service_name>` here represents the AWS SDK service 
 name as it is used by the [aws-sdk-go-v2](github.com/aws/aws-sdk-go-v2) module.
 

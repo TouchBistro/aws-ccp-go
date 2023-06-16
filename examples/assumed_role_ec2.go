@@ -26,12 +26,12 @@ func main() {
 	rol1, err := providers.NewAssumeRoleCredsProvider(context.Background(), "rol1",
 		providers.WithBaseCredsProvider(sh1), providers.WithRoleArn(role_to_assume), providers.ValidateProvider())
 	if err != nil {
-		fmt.Println("error initializing provider")
+		fmt.Println("error assuming role")
 		os.Exit(1)
 	}
 
 	fmt.Println("initializing ec2 client")
-	client, err := _ec2.NewClient(rol1)
+	client, err := _ec2.Client(rol1)
 	if err != nil {
 		fmt.Println("error initializing ec2 client")
 		fmt.Println(err.Error())

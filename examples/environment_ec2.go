@@ -23,7 +23,7 @@ func main() {
 	}
 
 	fmt.Println("initializing ec2 client")
-	client, err := _ec2.NewClient(env1)
+	client, err := _ec2.Client(env1)
 	if err != nil {
 		fmt.Println("error initializing ec2 client" + err.Error())
 		os.Exit(1)

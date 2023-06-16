@@ -1,29 +1,30 @@
-//AUTO-GENERATED CODE - DO NOT EDIT
-//See instructions under /codegen/README.md
-//GENERATED ON 2023-06-13 21:44:51
+// AUTO-GENERATED CODE - DO NOT EDIT
+// See instructions under /codegen/README.md
+// GENERATED ON 2023-06-16 18:24:12
 
 // Package _rds provides AWS client management functions for the rds
 // AWS service.
 //
-// The NewClient() is a wrapper on rds.NewFromConfig(), which creates & caches
+// The Client() is a wrapper on rds.NewFromConfig(), which creates & caches
 // the client.
 //
-// The DeleteClient() clears the cached client.
+// The Delete() clears the cached client.
 //
 package _rds
 
 import (
+	"sync"
+
 	"github.com/TouchBistro/aws-ccp-go/providers"
 	"github.com/aws/aws-sdk-go-v2/service/rds"
-	"sync"
 )
 
 var cmap sync.Map
 
-//NewClient builds or returns the singleton rds client for the supplied provider
-//If functional options are supplied, they are passed as-is to the underlying NewFromConfig(...)
-//for the corresponding client
-func NewClient(provider providers.CredsProvider, optFns ...func(*rds.Options)) (*rds.Client, error) {
+// Client builds or returns the singleton rds client for the supplied provider
+// If functional options are supplied, they are passed as-is to the underlying NewFromConfig(...)
+// for the corresponding client
+func Client(provider providers.CredsProvider, optFns ...func(*rds.Options)) (*rds.Client, error) {
 
 	if provider == nil {
 		return nil, providers.ErrNilProvider
@@ -36,9 +37,9 @@ func NewClient(provider providers.CredsProvider, optFns ...func(*rds.Options)) (
 	return client.(*rds.Client), nil
 }
 
-//DeleteClient deletes the cached rds client for the supplied provider; This foreces the subsequent
-//calls to NewClient() for the same provider to recreate & return a new instnce.
-func DeleteClient(provider providers.CredsProvider) error {
+// Delete removes the cached rds client for the supplied provider; This foreces the subsequent
+// calls to Client() for the same provider to recreate & return a new instnce.
+func Delete(provider providers.CredsProvider) error {
 
 	if provider == nil {
 		return providers.ErrNilProvider

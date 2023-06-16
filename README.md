@@ -354,13 +354,13 @@ import (
 
 )
 ```
-All client packages expose `2` helper functions: `NewClient()` & `DeleteClient()`. 
+All client packages expose `2` helper functions: `Client()` & `Delete()`. 
 
-The `NewClient` function returns a singleton AWS service client. It uses the supplied `providers.CredsProvdier` 
+The `Client` function returns a singleton AWS service client. It uses the supplied `providers.CredsProvdier` 
 sub-type as the configuration (`aws.Config`).
 
-The `DeleteClient` clears the singleton instance for the supplied `provider` to force the module to create 
-and return a new instance in the next call to `NewClient`
+The `Delete` function clears the singleton instance for the supplied `provider` to force the module to create 
+and return a new instance in the next call to `Client`
 
 The `aws-ccp-go` supports basic configurartion out of the box. If more specific configuration is required, 
 functional options can be supplied to client builder methods for instance: AWS Region or Client Retry Attempts etc.  

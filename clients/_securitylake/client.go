@@ -1,29 +1,30 @@
-//AUTO-GENERATED CODE - DO NOT EDIT
-//See instructions under /codegen/README.md
-//GENERATED ON 2023-06-13 21:44:51
+// AUTO-GENERATED CODE - DO NOT EDIT
+// See instructions under /codegen/README.md
+// GENERATED ON 2023-06-16 18:24:12
 
 // Package _securitylake provides AWS client management functions for the securitylake
 // AWS service.
 //
-// The NewClient() is a wrapper on securitylake.NewFromConfig(), which creates & caches
+// The Client() is a wrapper on securitylake.NewFromConfig(), which creates & caches
 // the client.
 //
-// The DeleteClient() clears the cached client.
+// The Delete() clears the cached client.
 //
 package _securitylake
 
 import (
+	"sync"
+
 	"github.com/TouchBistro/aws-ccp-go/providers"
 	"github.com/aws/aws-sdk-go-v2/service/securitylake"
-	"sync"
 )
 
 var cmap sync.Map
 
-//NewClient builds or returns the singleton securitylake client for the supplied provider
-//If functional options are supplied, they are passed as-is to the underlying NewFromConfig(...)
-//for the corresponding client
-func NewClient(provider providers.CredsProvider, optFns ...func(*securitylake.Options)) (*securitylake.Client, error) {
+// Client builds or returns the singleton securitylake client for the supplied provider
+// If functional options are supplied, they are passed as-is to the underlying NewFromConfig(...)
+// for the corresponding client
+func Client(provider providers.CredsProvider, optFns ...func(*securitylake.Options)) (*securitylake.Client, error) {
 
 	if provider == nil {
 		return nil, providers.ErrNilProvider
@@ -36,9 +37,9 @@ func NewClient(provider providers.CredsProvider, optFns ...func(*securitylake.Op
 	return client.(*securitylake.Client), nil
 }
 
-//DeleteClient deletes the cached securitylake client for the supplied provider; This foreces the subsequent
-//calls to NewClient() for the same provider to recreate & return a new instnce.
-func DeleteClient(provider providers.CredsProvider) error {
+// Delete removes the cached securitylake client for the supplied provider; This foreces the subsequent
+// calls to Client() for the same provider to recreate & return a new instnce.
+func Delete(provider providers.CredsProvider) error {
 
 	if provider == nil {
 		return providers.ErrNilProvider

@@ -1,29 +1,30 @@
-//AUTO-GENERATED CODE - DO NOT EDIT
-//See instructions under /codegen/README.md
-//GENERATED ON 2023-06-13 21:44:51
+// AUTO-GENERATED CODE - DO NOT EDIT
+// See instructions under /codegen/README.md
+// GENERATED ON 2023-06-16 18:24:12
 
 // Package _detective provides AWS client management functions for the detective
 // AWS service.
 //
-// The NewClient() is a wrapper on detective.NewFromConfig(), which creates & caches
+// The Client() is a wrapper on detective.NewFromConfig(), which creates & caches
 // the client.
 //
-// The DeleteClient() clears the cached client.
+// The Delete() clears the cached client.
 //
 package _detective
 
 import (
+	"sync"
+
 	"github.com/TouchBistro/aws-ccp-go/providers"
 	"github.com/aws/aws-sdk-go-v2/service/detective"
-	"sync"
 )
 
 var cmap sync.Map
 
-//NewClient builds or returns the singleton detective client for the supplied provider
-//If functional options are supplied, they are passed as-is to the underlying NewFromConfig(...)
-//for the corresponding client
-func NewClient(provider providers.CredsProvider, optFns ...func(*detective.Options)) (*detective.Client, error) {
+// Client builds or returns the singleton detective client for the supplied provider
+// If functional options are supplied, they are passed as-is to the underlying NewFromConfig(...)
+// for the corresponding client
+func Client(provider providers.CredsProvider, optFns ...func(*detective.Options)) (*detective.Client, error) {
 
 	if provider == nil {
 		return nil, providers.ErrNilProvider
@@ -36,9 +37,9 @@ func NewClient(provider providers.CredsProvider, optFns ...func(*detective.Optio
 	return client.(*detective.Client), nil
 }
 
-//DeleteClient deletes the cached detective client for the supplied provider; This foreces the subsequent
-//calls to NewClient() for the same provider to recreate & return a new instnce.
-func DeleteClient(provider providers.CredsProvider) error {
+// Delete removes the cached detective client for the supplied provider; This foreces the subsequent
+// calls to Client() for the same provider to recreate & return a new instnce.
+func Delete(provider providers.CredsProvider) error {
 
 	if provider == nil {
 		return providers.ErrNilProvider

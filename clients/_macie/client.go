@@ -1,29 +1,30 @@
-//AUTO-GENERATED CODE - DO NOT EDIT
-//See instructions under /codegen/README.md
-//GENERATED ON 2023-06-13 21:44:51
+// AUTO-GENERATED CODE - DO NOT EDIT
+// See instructions under /codegen/README.md
+// GENERATED ON 2023-06-16 18:24:12
 
 // Package _macie provides AWS client management functions for the macie
 // AWS service.
 //
-// The NewClient() is a wrapper on macie.NewFromConfig(), which creates & caches
+// The Client() is a wrapper on macie.NewFromConfig(), which creates & caches
 // the client.
 //
-// The DeleteClient() clears the cached client.
+// The Delete() clears the cached client.
 //
 package _macie
 
 import (
+	"sync"
+
 	"github.com/TouchBistro/aws-ccp-go/providers"
 	"github.com/aws/aws-sdk-go-v2/service/macie"
-	"sync"
 )
 
 var cmap sync.Map
 
-//NewClient builds or returns the singleton macie client for the supplied provider
-//If functional options are supplied, they are passed as-is to the underlying NewFromConfig(...)
-//for the corresponding client
-func NewClient(provider providers.CredsProvider, optFns ...func(*macie.Options)) (*macie.Client, error) {
+// Client builds or returns the singleton macie client for the supplied provider
+// If functional options are supplied, they are passed as-is to the underlying NewFromConfig(...)
+// for the corresponding client
+func Client(provider providers.CredsProvider, optFns ...func(*macie.Options)) (*macie.Client, error) {
 
 	if provider == nil {
 		return nil, providers.ErrNilProvider
@@ -36,9 +37,9 @@ func NewClient(provider providers.CredsProvider, optFns ...func(*macie.Options))
 	return client.(*macie.Client), nil
 }
 
-//DeleteClient deletes the cached macie client for the supplied provider; This foreces the subsequent
-//calls to NewClient() for the same provider to recreate & return a new instnce.
-func DeleteClient(provider providers.CredsProvider) error {
+// Delete removes the cached macie client for the supplied provider; This foreces the subsequent
+// calls to Client() for the same provider to recreate & return a new instnce.
+func Delete(provider providers.CredsProvider) error {
 
 	if provider == nil {
 		return providers.ErrNilProvider

@@ -1,29 +1,30 @@
-//AUTO-GENERATED CODE - DO NOT EDIT
-//See instructions under /codegen/README.md
-//GENERATED ON 2023-06-13 21:44:51
+// AUTO-GENERATED CODE - DO NOT EDIT
+// See instructions under /codegen/README.md
+// GENERATED ON 2023-06-16 18:24:12
 
 // Package _pinpointsmsvoicev2 provides AWS client management functions for the pinpointsmsvoicev2
 // AWS service.
 //
-// The NewClient() is a wrapper on pinpointsmsvoicev2.NewFromConfig(), which creates & caches
+// The Client() is a wrapper on pinpointsmsvoicev2.NewFromConfig(), which creates & caches
 // the client.
 //
-// The DeleteClient() clears the cached client.
+// The Delete() clears the cached client.
 //
 package _pinpointsmsvoicev2
 
 import (
+	"sync"
+
 	"github.com/TouchBistro/aws-ccp-go/providers"
 	"github.com/aws/aws-sdk-go-v2/service/pinpointsmsvoicev2"
-	"sync"
 )
 
 var cmap sync.Map
 
-//NewClient builds or returns the singleton pinpointsmsvoicev2 client for the supplied provider
-//If functional options are supplied, they are passed as-is to the underlying NewFromConfig(...)
-//for the corresponding client
-func NewClient(provider providers.CredsProvider, optFns ...func(*pinpointsmsvoicev2.Options)) (*pinpointsmsvoicev2.Client, error) {
+// Client builds or returns the singleton pinpointsmsvoicev2 client for the supplied provider
+// If functional options are supplied, they are passed as-is to the underlying NewFromConfig(...)
+// for the corresponding client
+func Client(provider providers.CredsProvider, optFns ...func(*pinpointsmsvoicev2.Options)) (*pinpointsmsvoicev2.Client, error) {
 
 	if provider == nil {
 		return nil, providers.ErrNilProvider
@@ -36,9 +37,9 @@ func NewClient(provider providers.CredsProvider, optFns ...func(*pinpointsmsvoic
 	return client.(*pinpointsmsvoicev2.Client), nil
 }
 
-//DeleteClient deletes the cached pinpointsmsvoicev2 client for the supplied provider; This foreces the subsequent
-//calls to NewClient() for the same provider to recreate & return a new instnce.
-func DeleteClient(provider providers.CredsProvider) error {
+// Delete removes the cached pinpointsmsvoicev2 client for the supplied provider; This foreces the subsequent
+// calls to Client() for the same provider to recreate & return a new instnce.
+func Delete(provider providers.CredsProvider) error {
 
 	if provider == nil {
 		return providers.ErrNilProvider

@@ -23,7 +23,7 @@ import (
 //go:generate echo "Running gofmt on source files..."
 //go:generate gofmt -s -w .
 
-//go:generate echo "Moving source files to providers package"
+//go:generate echo "Moving source files to repository root"
 //go:generate mv -f clients/ ../
 
 // add list of AWS service names to include in the code generation
@@ -34,7 +34,7 @@ var include_services = []string{}
 // if empty, exclude nothing
 var exclude_services = []string{"internal"}
 
-//set simple datastructure over
+// set simple datastructure over
 type set map[string]struct{}
 
 func (s set) add(member string) {
@@ -54,7 +54,7 @@ func (s set) empty() bool {
 	return len(s) == 0
 }
 
-//GitResponse
+// GitResponse
 type GitResponse struct {
 	Name string `json:"name"`
 	Path string `json:"path"`
@@ -65,15 +65,15 @@ type GitResponse struct {
 // //github API reference: https://docs.github.com/en/rest/repos/contents?apiVersion=2022-11-28
 func fetchServicesList(owner, repo, path string) ([]string, error) {
 
-	//build include map
-	//service names in this set to be included only...
+	// build include map
+	// service names in this set to be included only...
 	include := make(set)
 	for _, i := range include_services {
 		include.add(i)
 	}
 
-	//build exclude map
-	//service names in this list must be excluded..
+	// build exclude map
+	// service names in this list must be excluded..
 	exclude := make(set)
 	for _, i := range exclude_services {
 		exclude.add(i)
@@ -96,7 +96,7 @@ func fetchServicesList(owner, repo, path string) ([]string, error) {
 
 	contents := make([]string, 0)
 	for _, r := range resp {
-		//if the includes list is empty OR this service is part of the list OR
+		// if the includes list is empty OR this service is part of the list OR
 		if include.empty() || include.contains(r.Name) {
 			if exclude.empty() || !exclude.contains(r.Name) {
 				contents = append(contents, r.Name)
@@ -107,10 +107,10 @@ func fetchServicesList(owner, repo, path string) ([]string, error) {
 	return contents, nil
 }
 
-//generateClients_go generates the clients.go
+// generateClients_go generates the clients.go
 func generateClients_go(prefix, owner, repo, path string, services []string) error {
 
-	//create the path /clients/_<service>
+	// create the path /clients/_<service>
 	relativePath := filepath.Join(".", "clients", fmt.Sprintf("_%v", prefix))
 	err := createIfNotExists(relativePath)
 	if err != nil {
@@ -118,7 +118,7 @@ func generateClients_go(prefix, owner, repo, path string, services []string) err
 		return err
 	}
 
-	//create files /clients/_<service>/client.go
+	// create files /clients/_<service>/client.go
 	f, err := os.Create(filepath.Join(relativePath, "client.go"))
 	if err != nil {
 		return err
@@ -137,12 +137,12 @@ func generateClients_go(prefix, owner, repo, path string, services []string) err
 	return nil
 }
 
-//timeStr returns the current timestamp as string
+// timeStr returns the current timestamp as string
 func timeStr() string {
 	return time.Now().Format("2006-01-02 15:04:05")
 }
 
-//createIfNotExists checks if the dir exists, else create
+// createIfNotExists checks if the dir exists, else create
 func createIfNotExists(dir string) error {
 	_, err := os.Stat(dir)
 	if err != nil {
@@ -179,24 +179,24 @@ var formatPackageName formatPackageNameFunc = func(name string) string {
 var clients_go_Tmpl = template.Must(template.New("client").Funcs(template.FuncMap{
 	"formatPackageName": formatPackageName,
 }).Parse(`
-//AUTO-GENERATED CODE - DO NOT EDIT
-//See instructions under /codegen/README.md
-//GENERATED ON {{ .GeneratedAt }}
+// AUTO-GENERATED CODE - DO NOT EDIT
+// See instructions under /codegen/README.md
+// GENERATED ON {{ .GeneratedAt }}
 
 // Package {{ formatPackageName .Package }} provides AWS client management functions for the {{ .Package }} 
 // AWS service. 
 //
-// The NewClient() is a wrapper on {{ .Package }}.NewFromConfig(), which creates & caches
+// The Client() is a wrapper on {{ .Package }}.NewFromConfig(), which creates & caches
 // the client.
 //
-// The DeleteClient() clears the cached client.
+// The Delete() clears the cached client.
 //
 package {{ formatPackageName .Package }}
 
 import (
 	"sync"
-	"github.com/TouchBistro/aws-ccp-go/providers"
 
+	"github.com/TouchBistro/aws-ccp-go/providers"
 	{{- range .Services}}
 	"github.com/aws/aws-sdk-go-v2/service/{{ printf "%v" . }}"
 	{{- end}}
@@ -205,10 +205,10 @@ import (
 var cmap sync.Map
 
 {{ range $idx, $svc := .Services}}
-//NewClient builds or returns the singleton {{ $svc }} client for the supplied provider
-//If functional options are supplied, they are passed as-is to the underlying NewFromConfig(...)
-//for the corresponding client
-func NewClient(provider providers.CredsProvider, optFns ...func(*{{ $svc }}.Options)) (*{{ $svc }}.Client, error) {
+// Client builds or returns the singleton {{ $svc }} client for the supplied provider
+// If functional options are supplied, they are passed as-is to the underlying NewFromConfig(...)
+// for the corresponding client
+func Client(provider providers.CredsProvider, optFns ...func(*{{ $svc }}.Options)) (*{{ $svc }}.Client, error) {
 
 	if provider == nil {
 		return nil, providers.ErrNilProvider
@@ -221,9 +221,9 @@ func NewClient(provider providers.CredsProvider, optFns ...func(*{{ $svc }}.Opti
 	return client.(*{{ $svc }}.Client), nil
 }
 
-//DeleteClient deletes the cached {{ $svc }} client for the supplied provider; This foreces the subsequent
-//calls to NewClient() for the same provider to recreate & return a new instnce.
-func DeleteClient(provider providers.CredsProvider) error {
+// Delete removes the cached {{ $svc }} client for the supplied provider; This foreces the subsequent
+// calls to Client() for the same provider to recreate & return a new instnce.
+func Delete(provider providers.CredsProvider) error {
 
 	if provider == nil {
 		return providers.ErrNilProvider

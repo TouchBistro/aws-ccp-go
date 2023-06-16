@@ -1,29 +1,30 @@
-//AUTO-GENERATED CODE - DO NOT EDIT
-//See instructions under /codegen/README.md
-//GENERATED ON 2023-06-13 21:44:51
+// AUTO-GENERATED CODE - DO NOT EDIT
+// See instructions under /codegen/README.md
+// GENERATED ON 2023-06-16 18:24:12
 
 // Package _serverlessapplicationrepository provides AWS client management functions for the serverlessapplicationrepository
 // AWS service.
 //
-// The NewClient() is a wrapper on serverlessapplicationrepository.NewFromConfig(), which creates & caches
+// The Client() is a wrapper on serverlessapplicationrepository.NewFromConfig(), which creates & caches
 // the client.
 //
-// The DeleteClient() clears the cached client.
+// The Delete() clears the cached client.
 //
 package _serverlessapplicationrepository
 
 import (
+	"sync"
+
 	"github.com/TouchBistro/aws-ccp-go/providers"
 	"github.com/aws/aws-sdk-go-v2/service/serverlessapplicationrepository"
-	"sync"
 )
 
 var cmap sync.Map
 
-//NewClient builds or returns the singleton serverlessapplicationrepository client for the supplied provider
-//If functional options are supplied, they are passed as-is to the underlying NewFromConfig(...)
-//for the corresponding client
-func NewClient(provider providers.CredsProvider, optFns ...func(*serverlessapplicationrepository.Options)) (*serverlessapplicationrepository.Client, error) {
+// Client builds or returns the singleton serverlessapplicationrepository client for the supplied provider
+// If functional options are supplied, they are passed as-is to the underlying NewFromConfig(...)
+// for the corresponding client
+func Client(provider providers.CredsProvider, optFns ...func(*serverlessapplicationrepository.Options)) (*serverlessapplicationrepository.Client, error) {
 
 	if provider == nil {
 		return nil, providers.ErrNilProvider
@@ -36,9 +37,9 @@ func NewClient(provider providers.CredsProvider, optFns ...func(*serverlessappli
 	return client.(*serverlessapplicationrepository.Client), nil
 }
 
-//DeleteClient deletes the cached serverlessapplicationrepository client for the supplied provider; This foreces the subsequent
-//calls to NewClient() for the same provider to recreate & return a new instnce.
-func DeleteClient(provider providers.CredsProvider) error {
+// Delete removes the cached serverlessapplicationrepository client for the supplied provider; This foreces the subsequent
+// calls to Client() for the same provider to recreate & return a new instnce.
+func Delete(provider providers.CredsProvider) error {
 
 	if provider == nil {
 		return providers.ErrNilProvider
