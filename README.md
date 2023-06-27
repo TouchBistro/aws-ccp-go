@@ -1,4 +1,14 @@
 
+
+[![GoDoc][1]][2] [![License: MIT][3]][4] [![CircleCI][5]][6] 
+
+[1]: https://pkg.go.dev/badge/github.com/evalphobia/aws-ccp-gor?utm_source=godoc
+[2]: https://pkg.go.dev/github.com/TouchBistro/aws-ccp-go
+[3]: https://img.shields.io/badge/License-MIT-blue.svg
+[4]: LICENSE
+[5]: https://dl.circleci.com/status-badge/img/gh/TouchBistro/aws-ccp-go/tree/master.svg?style=svg
+[6]: https://dl.circleci.com/status-badge/redirect/gh/TouchBistro/aws-ccp-go/tree/master
+
 # AWS Config & Clients Provider for Go `(aws-ccp-go)`
 
 A lightweight wrapper on the **AWS SDK for Go V2**, Config & Clients API.
