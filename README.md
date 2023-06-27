@@ -5,7 +5,7 @@
 [1]: https://pkg.go.dev/badge/github.com/evalphobia/aws-sdk-go-wrapper?utm_source=godoc
 [2]: https://pkg.go.dev/github.com/TouchBistro/aws-ccp-go
 [3]: https://img.shields.io/badge/License-MIT-blue.svg
-[4]: LICENSE.md
+[4]: LICENSE
 [5]: https://dl.circleci.com/status-badge/img/gh/TouchBistro/aws-ccp-go/tree/master.svg?style=svg
 [6]: https://dl.circleci.com/status-badge/redirect/gh/TouchBistro/aws-ccp-go/tree/master
 
