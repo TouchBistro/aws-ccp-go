@@ -63,6 +63,8 @@ workflows:
          context: org-global 
      - release:
          context: org-global
+         requires:
+           - lint-build-test
          filters: 
            branches:
              only:
