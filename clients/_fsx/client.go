@@ -1,6 +1,6 @@
 // AUTO-GENERATED CODE - DO NOT EDIT
 // See instructions under /codegen/README.md
-// GENERATED ON 2023-06-16 18:24:12
+// GENERATED ON 2023-07-31 09:25:17
 
 // Package _fsx provides AWS client management functions for the fsx
 // AWS service.
@@ -37,6 +37,16 @@ func Client(provider providers.CredsProvider, optFns ...func(*fsx.Options)) (*fs
 	return client.(*fsx.Client), nil
 }
 
+// Must wraps the _fsx.Client( ) function & panics if a non-nil error is returned.
+func Must(provider providers.CredsProvider, optFns ...func(*fsx.Options)) *fsx.Client {
+
+	client, err := Client(provider, optFns...)
+	if err != nil {
+		panic(err)
+	}
+	return client
+}
+
 // Delete removes the cached fsx client for the supplied provider; This foreces the subsequent
 // calls to Client() for the same provider to recreate & return a new instnce.
 func Delete(provider providers.CredsProvider) error {
@@ -48,4 +58,14 @@ func Delete(provider providers.CredsProvider) error {
 		cmap.Delete(provider.Key())
 	}
 	return nil
+}
+
+// Refresh discards the cached fsx client if it exists, builds & returns a new singleton instance
+func Refresh(provider providers.CredsProvider, optFns ...func(*fsx.Options)) (*fsx.Client, error) {
+
+	err := Delete(provider)
+	if err != nil {
+		return nil, err
+	}
+	return Client(provider, optFns...)
 }

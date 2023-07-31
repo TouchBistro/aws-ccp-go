@@ -364,13 +364,18 @@ import (
 
 )
 ```
-All client packages expose `2` helper functions: `Client()` & `Delete()`. 
+All client packages expose `4` helper functions: `Client()`, `Must()`, `Delete()` and `Refresh()`
 
 The `Client` function returns a singleton AWS service client. It uses the supplied `providers.CredsProvdier` 
 sub-type as the configuration (`aws.Config`).
 
+The `Must()` function is a wrapper for the `Client()` function & panics if a non-nil error is returned. It 
+allows convenience for initializing or passing AWS clients in the client code.
+
 The `Delete` function clears the singleton instance for the supplied `provider` to force the module to create 
 and return a new instance in the next call to `Client`
+
+The `Refresh()` function discards the singleton client if it exists & recreates it.
 
 The `aws-ccp-go` supports basic configurartion out of the box. If more specific configuration is required, 
 functional options can be supplied to client builder methods for instance: AWS Region or Client Retry Attempts etc.  
@@ -387,6 +392,19 @@ forwarded as-is to the clients' `NewFromConfig(...)` builder functions.
 			o.Region = "us-east-2" 
 			o.RetryMaxAttempts = 4
 	})
+
+
+```
+
+or simply 
+
+```go 
+
+  // build & return an ECS client for the `r2` provider with 
+  // additioanl functional options, these are passed directly
+  // to the underlying server.NewFromConfig(...) function for 
+  // additional configuration
+  client := _ecs.Must(r2)
 
 
 ```

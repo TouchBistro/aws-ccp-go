@@ -1,6 +1,6 @@
 // AUTO-GENERATED CODE - DO NOT EDIT
 // See instructions under /codegen/README.md
-// GENERATED ON 2023-06-16 18:24:12
+// GENERATED ON 2023-07-31 09:25:17
 
 // Package _greengrassv2 provides AWS client management functions for the greengrassv2
 // AWS service.
@@ -37,6 +37,16 @@ func Client(provider providers.CredsProvider, optFns ...func(*greengrassv2.Optio
 	return client.(*greengrassv2.Client), nil
 }
 
+// Must wraps the _greengrassv2.Client( ) function & panics if a non-nil error is returned.
+func Must(provider providers.CredsProvider, optFns ...func(*greengrassv2.Options)) *greengrassv2.Client {
+
+	client, err := Client(provider, optFns...)
+	if err != nil {
+		panic(err)
+	}
+	return client
+}
+
 // Delete removes the cached greengrassv2 client for the supplied provider; This foreces the subsequent
 // calls to Client() for the same provider to recreate & return a new instnce.
 func Delete(provider providers.CredsProvider) error {
@@ -48,4 +58,14 @@ func Delete(provider providers.CredsProvider) error {
 		cmap.Delete(provider.Key())
 	}
 	return nil
+}
+
+// Refresh discards the cached greengrassv2 client if it exists, builds & returns a new singleton instance
+func Refresh(provider providers.CredsProvider, optFns ...func(*greengrassv2.Options)) (*greengrassv2.Client, error) {
+
+	err := Delete(provider)
+	if err != nil {
+		return nil, err
+	}
+	return Client(provider, optFns...)
 }

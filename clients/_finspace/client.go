@@ -1,6 +1,6 @@
 // AUTO-GENERATED CODE - DO NOT EDIT
 // See instructions under /codegen/README.md
-// GENERATED ON 2023-06-16 18:24:12
+// GENERATED ON 2023-07-31 09:25:17
 
 // Package _finspace provides AWS client management functions for the finspace
 // AWS service.
@@ -37,6 +37,16 @@ func Client(provider providers.CredsProvider, optFns ...func(*finspace.Options))
 	return client.(*finspace.Client), nil
 }
 
+// Must wraps the _finspace.Client( ) function & panics if a non-nil error is returned.
+func Must(provider providers.CredsProvider, optFns ...func(*finspace.Options)) *finspace.Client {
+
+	client, err := Client(provider, optFns...)
+	if err != nil {
+		panic(err)
+	}
+	return client
+}
+
 // Delete removes the cached finspace client for the supplied provider; This foreces the subsequent
 // calls to Client() for the same provider to recreate & return a new instnce.
 func Delete(provider providers.CredsProvider) error {
@@ -48,4 +58,14 @@ func Delete(provider providers.CredsProvider) error {
 		cmap.Delete(provider.Key())
 	}
 	return nil
+}
+
+// Refresh discards the cached finspace client if it exists, builds & returns a new singleton instance
+func Refresh(provider providers.CredsProvider, optFns ...func(*finspace.Options)) (*finspace.Client, error) {
+
+	err := Delete(provider)
+	if err != nil {
+		return nil, err
+	}
+	return Client(provider, optFns...)
 }
