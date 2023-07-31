@@ -400,10 +400,9 @@ or simply
 
 ```go 
 
-  // build & return an ECS client for the `r2` provider with 
-  // additioanl functional options, these are passed directly
-  // to the underlying server.NewFromConfig(...) function for 
-  // additional configuration
+  // build & return an ECS client for the `r2` provider 
+  // Since Must() is used, an error while creating the Client
+  // will result in a panic
   client := _ecs.Must(r2)
 
 
