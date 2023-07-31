@@ -221,6 +221,16 @@ func Client(provider providers.CredsProvider, optFns ...func(*{{ $svc }}.Options
 	return client.(*{{ $svc }}.Client), nil
 }
 
+// Must wraps the _{{ $svc }}.Client( ) function & panics if a non-nil error is returned. 
+func Must(provider providers.CredsProvider, optFns ...func(*{{ $svc }}.Options)) *{{ $svc }}.Client {
+
+	client, err := Client(provider,optFns...)
+	if err != nil {
+		panic(err)
+	}
+	return client
+}
+
 // Delete removes the cached {{ $svc }} client for the supplied provider; This foreces the subsequent
 // calls to Client() for the same provider to recreate & return a new instnce.
 func Delete(provider providers.CredsProvider) error {
@@ -233,6 +243,18 @@ func Delete(provider providers.CredsProvider) error {
 	}
 	return nil
 }
+
+
+// Refresh discards the cached {{ $svc }} client if it exists, builds & returns a new singleton instance
+func Refresh(provider providers.CredsProvider, optFns ...func(*{{ $svc }}.Options)) (*{{ $svc }}.Client, error) {
+
+	err := Delete(provider)
+	if err != nil {
+		return nil, err
+	}
+	return Client(provider,optFns...)
+}
+
 
 {{ end }}
 `))

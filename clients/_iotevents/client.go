@@ -1,6 +1,6 @@
 // AUTO-GENERATED CODE - DO NOT EDIT
 // See instructions under /codegen/README.md
-// GENERATED ON 2023-06-16 18:24:12
+// GENERATED ON 2023-07-31 09:25:17
 
 // Package _iotevents provides AWS client management functions for the iotevents
 // AWS service.
@@ -37,6 +37,16 @@ func Client(provider providers.CredsProvider, optFns ...func(*iotevents.Options)
 	return client.(*iotevents.Client), nil
 }
 
+// Must wraps the _iotevents.Client( ) function & panics if a non-nil error is returned.
+func Must(provider providers.CredsProvider, optFns ...func(*iotevents.Options)) *iotevents.Client {
+
+	client, err := Client(provider, optFns...)
+	if err != nil {
+		panic(err)
+	}
+	return client
+}
+
 // Delete removes the cached iotevents client for the supplied provider; This foreces the subsequent
 // calls to Client() for the same provider to recreate & return a new instnce.
 func Delete(provider providers.CredsProvider) error {
@@ -48,4 +58,14 @@ func Delete(provider providers.CredsProvider) error {
 		cmap.Delete(provider.Key())
 	}
 	return nil
+}
+
+// Refresh discards the cached iotevents client if it exists, builds & returns a new singleton instance
+func Refresh(provider providers.CredsProvider, optFns ...func(*iotevents.Options)) (*iotevents.Client, error) {
+
+	err := Delete(provider)
+	if err != nil {
+		return nil, err
+	}
+	return Client(provider, optFns...)
 }
