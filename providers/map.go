@@ -42,7 +42,36 @@ func Get(providerName string) (CredsProvider, error) {
 	}
 }
 
+// Mustet returns the named CredsProvider, or panics if an error occurs
+func MustGet(providerName string) CredsProvider {
+	p, err := Get(providerName)
+	if err != nil {
+		panic(err)
+	}
+	return p
+}
+
 // Default returns the 'default' provider
 func Default() (CredsProvider, error) {
 	return Get(DefaultCredsProviderName)
+}
+
+// Clone a provider for supplied providerName with the cloneName and return it
+// if the provider for supplied name does not exists, returns an error
+func Clone(providerName, cloneName string) (CredsProvider, error) {
+	p, err := Get(providerName)
+	if err != nil {
+		return nil, err
+	}
+	pmap.put(cloneName, p)
+	return p, nil
+}
+
+// MustClone clones the providerName to clonedName, or panics if an error occurs
+func MustClone(providerName, cloneName string) CredsProvider {
+	p, err := Clone(providerName, cloneName)
+	if err != nil {
+		panic(err)
+	}
+	return p
 }
