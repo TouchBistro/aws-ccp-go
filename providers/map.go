@@ -67,7 +67,7 @@ func Clone(providerName, cloneName string) (CredsProvider, error) {
 	return p, nil
 }
 
-// MustClone clones the providerName to clonedName, or panics if an error occurs
+// MustClone clones the providerName to cloneName, or panics if an error occurs
 func MustClone(providerName, cloneName string) CredsProvider {
 	p, err := Clone(providerName, cloneName)
 	if err != nil {
