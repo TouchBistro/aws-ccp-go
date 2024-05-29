@@ -270,7 +270,7 @@ If the credentials are not found a non-nil `error` is returned.
 
 ### **Implicit `default` Environment Creds Provider**:
 
-The `default` named provider can be auto-initialized with an `EnvironmentCredsProvider` by reading the runtime command-line arguments passed on to the calling code. This can be achieved by importing the `inti/cmd` package of the module with a blank identifier. See example below for the command-line flags that `aws-ccp-go` looks for for initialization. 
+The `default` named provider can be auto-initialized with an `EnvironmentCredsProvider` by reading the runtime command-line arguments passed on to the calling code. This can be achieved by importing the `init/cmd` package of the module with a blank identifier. See example below for the command-line flags that `aws-ccp-go` looks for for initialization. 
 
 ```bash 
 
@@ -308,7 +308,7 @@ supplied shared config files are not found a non-nil `error` is returned.
 
 ### **Implicit `default` Shared Configuration Creds Provider**:
 
-The `default` named provider can be auto-initialized with a `SharedConfigCredsProvider` by reading the runtime command-line arguments passed on to the calling code. This can be achieved by importing the `inti/cmd` package of the module with a blank identifier. See example below for the command-line flags that `aws-ccp-go` looks for for initialization. 
+The `default` named provider can be auto-initialized with a `SharedConfigCredsProvider` by reading the runtime command-line arguments passed on to the calling code. This can be achieved by importing the `init/cmd` package of the module with a blank identifier. See example below for the command-line flags that `aws-ccp-go` looks for for initialization. 
 
 ```bash 
 
