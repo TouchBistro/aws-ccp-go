@@ -52,7 +52,6 @@ import (
 //
 //	the AWS Session Token. If not supplied, AWS_SESSION_TOKEN is the deafult value used.
 func init() {
-	fmt.Println("cmd init")
 
 	// region
 	region := flag.String("region", "us-east-1", "supply the aws default region")
