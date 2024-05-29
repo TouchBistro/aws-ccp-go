@@ -281,9 +281,7 @@ Here `your_util` is the binary created from the client code that imports `github
 using the AWS SDK standard environment variables for the access key id, secret access key and the session token. 
 
 The following example shows how to use non-standard environment variables to read the AWS access credentials.
-
-or 
-
+ 
 ```bash 
 % your_util --env \
             --access-key-id-from YOUR_KEY_ID_VAR \
@@ -321,7 +319,6 @@ Here `your_util` is the binary created from the client code that imports `github
 
 The following example shows how to use non-default shared configuration files
 
-or 
 
 ```bash 
 % your_util --profile someProfileName \
