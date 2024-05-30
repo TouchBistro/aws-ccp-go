@@ -1,6 +1,6 @@
 // AUTO-GENERATED CODE - DO NOT EDIT
 // See instructions under /codegen/README.md
-// GENERATED ON 2023-07-31 09:25:17
+// GENERATED ON 2024-05-30 07:41:01
 
 // Package _cloudhsmv2 provides AWS client management functions for the cloudhsmv2
 // AWS service.
@@ -9,7 +9,6 @@
 // the client.
 //
 // The Delete() clears the cached client.
-//
 package _cloudhsmv2
 
 import (
