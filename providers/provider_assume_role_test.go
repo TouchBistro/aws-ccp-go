@@ -60,7 +60,10 @@ func TestNewAssumeRoleCredsProviderRegion(t *testing.T) {
 	}
 
 	EUSouth1 := "eu-south-1"
-	base, _ := NewDefaultCredsProvider(context.Background(), "d1", WithRegion(EUSouth1))
+	base, err := NewDefaultCredsProvider(context.Background(), "d1", WithRegion(EUSouth1))
+	if err != nil {
+		t.Error("error = nil expected")
+	}
 
 	//role to assume
 	roleArn := os.Getenv("AWS_CREDS_PROVIDER_TEST_ASSUME_ROLE")

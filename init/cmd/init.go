@@ -45,39 +45,38 @@ import (
 //		                    the AWS Session Token. If not supplied, AWS_SESSION_TOKEN is the deafult value used.
 func init() {
 
+	defaultValue := ""
+
 	// region
-	region := flag.String("region", "", "supply the aws default region")
+	region := flag.String("region", defaultValue, "supply the aws default region")
 
 	// profile
-	profile := flag.String("profile", "", "supply the profile")
-	credsFile := flag.String("creds-file", "", "env var to read the credentials file path")
-	configFile := flag.String("config-file", "", "env var to read the config file path")
+	profile := flag.String("profile", defaultValue, "supply the profile")
+	credsFile := flag.String("creds-file", defaultValue, "env var to read the credentials file path")
+	configFile := flag.String("config-file", defaultValue, "env var to read the config file path")
 
 	// env
 	isEnv := flag.Bool("env", false, "use env")
-	accessKeyId := flag.String("access-key-id-from", "", "env var to read access key id from")
-	secretAccessKey := flag.String("secret-access-key-from", "", "env var to read secret access key from")
-	sessionToken := flag.String("session-name-from", "", "env var to read session toekn from")
-
+	accessKeyId := flag.String("access-key-id-from", defaultValue, "env var to read access key id from")
+	secretAccessKey := flag.String("secret-access-key-from", defaultValue, "env var to read secret access key from")
+	sessionToken := flag.String("session-name-from", defaultValue, "env var to read session toekn from")
 	flag.Parse()
 
 	defaultRegion := providers.DefaultAWSRegion
-	if region != nil && len(*region) > 0 {
+	if supplied(region) {
 		defaultRegion = *region
 	}
 
 	fn := make([]providers.CredsProviderOptionsFunc, 0)
 	fn = append(fn, providers.WithRegion(defaultRegion))
 
-	if profile != nil && len(*profile) > 0 {
+	if supplied(profile) {
 
 		fn = append(fn, providers.WithConfigProfile(*profile))
-
-		if credsFile != nil && len(*credsFile) > 0 {
+		if supplied(credsFile) {
 			fn = append(fn, providers.WithCredentialsFile(*credsFile))
 		}
-
-		if configFile != nil && len(*configFile) > 0 {
+		if supplied(configFile) {
 			fn = append(fn, providers.WithConfigFile(*configFile))
 		}
 
@@ -85,13 +84,13 @@ func init() {
 		return
 	} else if isEnv != nil && *isEnv {
 
-		if accessKeyId != nil && len(*accessKeyId) > 0 {
+		if supplied(accessKeyId) {
 			fn = append(fn, providers.WithAccessKeyIdFrom(*accessKeyId))
 		}
-		if secretAccessKey != nil && len(*secretAccessKey) > 0 {
+		if supplied(secretAccessKey) {
 			fn = append(fn, providers.WithSecretAccessKeyFrom(*secretAccessKey))
 		}
-		if sessionToken != nil && len(*sessionToken) > 0 {
+		if supplied(sessionToken) {
 			fn = append(fn, providers.WithSessionTokenFrom(*sessionToken))
 		}
 
@@ -100,4 +99,8 @@ func init() {
 	}
 
 	_, _ = providers.NewDefaultCredsProvider(context.Background(), providers.DefaultCredsProviderName, fn...)
+}
+
+func supplied(val *string) bool {
+	return val != nil && len(*val) > 0
 }
