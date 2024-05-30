@@ -3,7 +3,6 @@ package cmd
 import (
 	"context"
 	"flag"
-	"fmt"
 
 	"github.com/TouchBistro/aws-ccp-go/providers"
 )
@@ -107,6 +106,5 @@ func init() {
 		return
 	}
 
-	fmt.Println("using default chain")
 	_, _ = providers.NewDefaultCredsProvider(context.Background(), providers.DefaultCredsProviderName, fn...)
 }
