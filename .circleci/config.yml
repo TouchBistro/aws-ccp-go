@@ -1,5 +1,9 @@
 version: 2.1
 
+
+orbs:
+  aws-cli: circleci/aws-cli@4.0
+
 cache_key: &cache_key aws-ccp-go-20230530-{{ checksum "go.sum" }}
 
 executors:
