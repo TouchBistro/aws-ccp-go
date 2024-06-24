@@ -15,8 +15,8 @@ commands:
     steps:
       - checkout 
       - aws-cli/setup:
-        role_session_name: circle-job
-        role_arn: $AWS_IAM_ROLE
+          role_session_name: circle-job
+          role_arn: $AWS_IAM_ROLE
       # - restore_cache:
       #     name: Restore dep cache
       #     keys: 
