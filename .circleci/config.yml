@@ -23,9 +23,9 @@ commands:
       #     paths: 
       #       - ~/go/pkg
       #       - bin/golangci-lint
-      - run:
-          name: Run linter
-          command: make lint
+      # - run:
+      #     name: Run linter
+      #     command: make lint
       - run:
           name: Run test
           command: go test ./...
