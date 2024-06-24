@@ -361,6 +361,26 @@ or you can supply account id and role name.
 				providers.WithRoleName("some-role"))
 
 ```
+### **Implicit `default` Assume Role Configuration Creds Provider**:
+
+The `default` named provider can be auto-initialized with a `AssumeRoleCredsProvider` by reading the runtime command-line arguments passed on to the calling code. This can be achieved by importing the `init/cmd` package of the module with a blank identifier. See example below for the command-line flags that `aws-ccp-go` looks for for initialization. 
+
+When this option is used, the based proivider to assume the role is configured using the DefaultCredsProvider if not other implicit flags are supplied, or
+one of the other supported implicit provider configuration
+
+```bash 
+
+% your_util --role-arn aws:arn:role:12345678910:role:some_role
+
+```
+
+The following example will configure `default` provider by first initializing a provider using the `someProfileName` with shared config & then assume the supplied role-arn.
+
+```bash 
+
+% your_util --role-arn aws:arn:role:12345678910:role:some_role --profile someProfileName 
+
+```
 
 If no role is supplied, the `AssumeRoleCredsProvider` simply uses the base role credentials.
 

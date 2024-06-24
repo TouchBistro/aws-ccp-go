@@ -26,9 +26,9 @@ commands:
       - run:
           name: Run linter
           command: make lint
-      # - run:
-      #     name: Run test
-      #     command: go test ./...
+      - run:
+          name: Run test
+          command: go test ./...
   codegen: 
     steps:
       - run: 
