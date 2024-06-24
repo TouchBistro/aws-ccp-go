@@ -73,6 +73,10 @@ func TestNewAssumeRoleCredsProviderRegion(t *testing.T) {
 		t.Error("error = nil expected")
 	}
 
+	if provider == nil {
+		t.Error("provider != nil expected")
+	}
+
 	if provider.Config().Region != USWest2 {
 		t.Errorf("expected region '%v', found '%v'", USWest2, provider.Config().Region)
 	}
