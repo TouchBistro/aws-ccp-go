@@ -1,6 +1,6 @@
 // AUTO-GENERATED CODE - DO NOT EDIT
 // See instructions under /codegen/README.md
-// GENERATED ON 2024-05-30 07:41:01
+// GENERATED ON 2024-06-25 08:17:34
 
 // Package _bedrockagentruntime provides AWS client management functions for the bedrockagentruntime
 // AWS service.
