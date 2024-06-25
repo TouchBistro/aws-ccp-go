@@ -17,19 +17,19 @@ commands:
       - aws-cli/setup:
           role_session_name: circle-job
           role_arn: $AWS_IAM_ROLE
-      # - restore_cache:
-      #     name: Restore dep cache
-      #     keys: 
-      #       - *cache_key 
+      - restore_cache:
+          name: Restore dep cache
+          keys: 
+            - *cache_key 
       - run: 
          name: Install dependencies
          command: make setup
-      # - save_cache:
-      #     name: Save dep cache 
-      #     key: *cache_key
-      #     paths: 
-      #       - ~/go/pkg
-      #       - bin/golangci-lint
+      - save_cache:
+          name: Save dep cache 
+          key: *cache_key
+          paths: 
+            - ~/go/pkg
+            - bin/golangci-lint
       # - run:
       #     name: Run linter
       #     command: make lint
