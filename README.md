@@ -289,6 +289,8 @@ The following example shows how to use non-standard environment variables to rea
 			--session-token-from YOUR_SESSION_TOKEN_VAR  
 ```
 
+For more details see [docs](./init/cmd/README.md)
+
 ## `SharedConfigCredsProvider`
 
 <br>
@@ -326,6 +328,7 @@ The following example shows how to use non-default shared configuration files
 			--config-file ~\.aws\config2
 ```
 
+For more details see [docs](./init/cmd/README.md)
 
 <br><br>
 
@@ -383,6 +386,8 @@ The following example will configure `default` provider by first initializing a 
 ```
 
 If no role is supplied, the `AssumeRoleCredsProvider` simply uses the base role credentials.
+
+For more details see [docs](./init/cmd/README.md)
 
 <br><br><br>
 # AWS Client Builder Functions
