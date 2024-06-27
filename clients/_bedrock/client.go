@@ -1,44 +1,43 @@
 // AUTO-GENERATED CODE - DO NOT EDIT
 // See instructions under /codegen/README.md
-// GENERATED ON 2023-07-31 09:25:17
+// GENERATED ON 2024-06-25 08:17:34
 
-// Package _macie provides AWS client management functions for the macie
+// Package _bedrock provides AWS client management functions for the bedrock
 // AWS service.
 //
-// The Client() is a wrapper on macie.NewFromConfig(), which creates & caches
+// The Client() is a wrapper on bedrock.NewFromConfig(), which creates & caches
 // the client.
 //
 // The Delete() clears the cached client.
-//
-package _macie
+package _bedrock
 
 import (
 	"sync"
 
 	"github.com/TouchBistro/aws-ccp-go/providers"
-	"github.com/aws/aws-sdk-go-v2/service/macie"
+	"github.com/aws/aws-sdk-go-v2/service/bedrock"
 )
 
 var cmap sync.Map
 
-// Client builds or returns the singleton macie client for the supplied provider
+// Client builds or returns the singleton bedrock client for the supplied provider
 // If functional options are supplied, they are passed as-is to the underlying NewFromConfig(...)
 // for the corresponding client
-func Client(provider providers.CredsProvider, optFns ...func(*macie.Options)) (*macie.Client, error) {
+func Client(provider providers.CredsProvider, optFns ...func(*bedrock.Options)) (*bedrock.Client, error) {
 
 	if provider == nil {
 		return nil, providers.ErrNilProvider
 	}
 	if _, ok := cmap.Load(provider.Key()); !ok {
-		client := macie.NewFromConfig(provider.Config(), optFns...)
+		client := bedrock.NewFromConfig(provider.Config(), optFns...)
 		cmap.Store(provider.Key(), client)
 	}
 	client, _ := cmap.Load(provider.Key())
-	return client.(*macie.Client), nil
+	return client.(*bedrock.Client), nil
 }
 
-// Must wraps the _macie.Client( ) function & panics if a non-nil error is returned.
-func Must(provider providers.CredsProvider, optFns ...func(*macie.Options)) *macie.Client {
+// Must wraps the _bedrock.Client( ) function & panics if a non-nil error is returned.
+func Must(provider providers.CredsProvider, optFns ...func(*bedrock.Options)) *bedrock.Client {
 
 	client, err := Client(provider, optFns...)
 	if err != nil {
@@ -47,7 +46,7 @@ func Must(provider providers.CredsProvider, optFns ...func(*macie.Options)) *mac
 	return client
 }
 
-// Delete removes the cached macie client for the supplied provider; This foreces the subsequent
+// Delete removes the cached bedrock client for the supplied provider; This foreces the subsequent
 // calls to Client() for the same provider to recreate & return a new instnce.
 func Delete(provider providers.CredsProvider) error {
 
@@ -60,8 +59,8 @@ func Delete(provider providers.CredsProvider) error {
 	return nil
 }
 
-// Refresh discards the cached macie client if it exists, builds & returns a new singleton instance
-func Refresh(provider providers.CredsProvider, optFns ...func(*macie.Options)) (*macie.Client, error) {
+// Refresh discards the cached bedrock client if it exists, builds & returns a new singleton instance
+func Refresh(provider providers.CredsProvider, optFns ...func(*bedrock.Options)) (*bedrock.Client, error) {
 
 	err := Delete(provider)
 	if err != nil {

@@ -1,6 +1,6 @@
 // AUTO-GENERATED CODE - DO NOT EDIT
 // See instructions under /codegen/README.md
-// GENERATED ON 2023-07-31 09:25:17
+// GENERATED ON 2024-06-25 08:17:34
 
 // Package _greengrassv2 provides AWS client management functions for the greengrassv2
 // AWS service.
@@ -9,7 +9,6 @@
 // the client.
 //
 // The Delete() clears the cached client.
-//
 package _greengrassv2
 
 import (

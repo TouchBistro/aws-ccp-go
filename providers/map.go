@@ -56,6 +56,11 @@ func Default() (CredsProvider, error) {
 	return Get(DefaultCredsProviderName)
 }
 
+// MustDefault returns the 'default' provider, or panics if an error occurs
+func MustDefault() CredsProvider {
+	return MustGet(DefaultCredsProviderName)
+}
+
 // Clone an existing provider for supplied providerName as the cloneName and return it
 // if the provider does not exist, it returns an error
 func Clone(providerName, cloneName string) (CredsProvider, error) {

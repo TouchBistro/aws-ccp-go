@@ -33,6 +33,7 @@ named `default` is initialized using the AWS default credentials chain & cached 
 This works for majority of use cases where AWS credentials are used from the most common sources, e.g AWS environment 
 variable, or shared config & credentials files, IAM role for ECS tasks or IAM role for EC2 instance (in that order)
 
+
 ```go
  import (
 
@@ -78,7 +79,7 @@ the `EnvironmentCredsProvider` to configure this.
 
 ```
 
-This allows the client code to set up multiple named `CredProvider`s that use different sets to environment variables 
+This allows the client code to set up multiple named `CredsProvider`s that use different sets to environment variables 
 for fetching their separate static AWS credentials.
 
 As shown in examples, `aws-ccp-go` uses a concept of named ***Providers*** to encapsulate the `aws.Config` 
@@ -215,7 +216,7 @@ default AWS Region.
 
 <br>
 
-### **Implicit Default Provider**:
+### **Implicit `default` Provider**:
 
 As discussed in the earlier section, when the root package of the module is imported with a blank identifier, a named 
 `DefaultCredsProvider` called `default` is initialized for the calling client code. 
@@ -267,6 +268,29 @@ If the credentials are not found a non-nil `error` is returned.
 
 <br><br>
 
+### **Implicit `default` Environment Creds Provider**:
+
+The `default` named provider can be auto-initialized with an `EnvironmentCredsProvider` by reading the runtime command-line arguments passed on to the calling code. This can be achieved by importing the `init/cmd` package of the module with a blank identifier. See example below for the command-line flags that `aws-ccp-go` looks for for initialization. 
+
+```bash 
+
+% your_util --env 
+```
+
+Here `your_util` is the binary created from the client code that imports `github.com/TouchBistro/aws-ccp-go/init/cmd` When `--env` flag is passed the `default` provider is initialized
+using the AWS SDK standard environment variables for the access key id, secret access key and the session token. 
+
+The following example shows how to use non-standard environment variables to read the AWS access credentials.
+ 
+```bash 
+% your_util --env \
+            --access-key-id-from YOUR_KEY_ID_VAR \
+			--secret-access-key-from YOUR_SECRET_KEY_VAR \
+			--session-token-from YOUR_SESSION_TOKEN_VAR  
+```
+
+For more details see [docs](./init/cmd/README.md)
+
 ## `SharedConfigCredsProvider`
 
 <br>
@@ -284,6 +308,27 @@ supplied shared config files are not found a non-nil `error` is returned.
 					providers.WithConfigProfile("core"))
 ```
 
+### **Implicit `default` Shared Configuration Creds Provider**:
+
+The `default` named provider can be auto-initialized with a `SharedConfigCredsProvider` by reading the runtime command-line arguments passed on to the calling code. This can be achieved by importing the `init/cmd` package of the module with a blank identifier. See example below for the command-line flags that `aws-ccp-go` looks for for initialization. 
+
+```bash 
+
+% your_util --profile someProfileName 
+```
+
+Here `your_util` is the binary created from the client code that imports `github.com/TouchBistro/aws-ccp-go/init/cmd` When `--profile` flag is supplied with a value, the `default` provider is initialized using the AWS SDK shared configuration files for reading the AWS credentials. The default shared configuration files located in `~/.aws/config` & `~/.aws/credentials` are used.
+
+The following example shows how to use non-default shared configuration files
+
+
+```bash 
+% your_util --profile someProfileName \
+            --creds-file ~\.aws\credentials2 \
+			--config-file ~\.aws\config2
+```
+
+For more details see [docs](./init/cmd/README.md)
 
 <br><br>
 
@@ -319,8 +364,30 @@ or you can supply account id and role name.
 				providers.WithRoleName("some-role"))
 
 ```
+### **Implicit `default` Assume Role Configuration Creds Provider**:
+
+The `default` named provider can be auto-initialized with a `AssumeRoleCredsProvider` by reading the runtime command-line arguments passed on to the calling code. This can be achieved by importing the `init/cmd` package of the module with a blank identifier. See example below for the command-line flags that `aws-ccp-go` looks for for initialization. 
+
+When this option is used, the based proivider to assume the role is configured using the DefaultCredsProvider if not other implicit flags are supplied, or
+one of the other supported implicit provider configuration
+
+```bash 
+
+% your_util --role-arn aws:arn:role:12345678910:role:some_role
+
+```
+
+The following example will configure `default` provider by first initializing a provider using the `someProfileName` with shared config & then assume the supplied role-arn.
+
+```bash 
+
+% your_util --role-arn aws:arn:role:12345678910:role:some_role --profile someProfileName 
+
+```
 
 If no role is supplied, the `AssumeRoleCredsProvider` simply uses the base role credentials.
+
+For more details see [docs](./init/cmd/README.md)
 
 <br><br><br>
 # AWS Client Builder Functions

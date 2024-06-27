@@ -30,11 +30,16 @@ func TestNewSharedConfigCredsProviderName(t *testing.T) {
 func TestNewSharedConfigCredsProviderRegion(t *testing.T) {
 
 	provider, err := NewSharedConfigCredsProvider(context.Background(), "s1")
+
 	if err != nil {
 		t.Error("error = nil expected")
 	}
 
-	if provider.Config().Region != DefaultAWSRegion {
+	if provider == nil {
+		t.Error("provider != nil expected")
+	}
+
+	if provider != nil && provider.Config().Region != DefaultAWSRegion {
 		t.Errorf("expected region '%v', found '%v'", DefaultAWSRegion, provider.Config().Region)
 
 	}
@@ -44,7 +49,15 @@ func TestNewSharedConfigCredsProviderRegion(t *testing.T) {
 		t.Error("error = nil expected")
 	}
 
-	if provider.Config().Region != DefaultAWSRegion {
+	if err != nil {
+		t.Error("error = nil expected")
+	}
+
+	if provider == nil {
+		t.Error("provider != nil expected")
+	}
+
+	if provider != nil && provider.Config().Region != DefaultAWSRegion {
 		t.Errorf("expected region '%v', found '%v'", DefaultAWSRegion, provider.Config().Region)
 
 	}
@@ -54,8 +67,15 @@ func TestNewSharedConfigCredsProviderRegion(t *testing.T) {
 	if err != nil {
 		t.Error("error = nil expected")
 	}
+	if err != nil {
+		t.Error("error = nil expected")
+	}
 
-	if provider.Config().Region != USWest2 {
+	if provider == nil {
+		t.Error("provider != nil expected")
+	}
+
+	if provider != nil && provider.Config().Region != USWest2 {
 		t.Errorf("expected region '%v', found '%v'", USWest2, provider.Config().Region)
 
 	}
