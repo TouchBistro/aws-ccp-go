@@ -2,6 +2,15 @@ module github.com/TouchBistro/aws-ccp-go
 
 go 1.21
 
+// This module is being decommissioned. Please use github.com/TouchBistro/awesome instead.
+retract (
+	v0.0.5
+	v0.0.4
+	v0.0.3
+	v0.0.2
+	v0.0.1
+)
+
 require (
 	github.com/aws/aws-sdk-go-v2 v1.27.0
 	github.com/aws/aws-sdk-go-v2/config v1.27.16
